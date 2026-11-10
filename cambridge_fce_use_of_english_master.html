@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-900 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambridge FCE (B2 First) Use of English Master</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Code+Pro:wght@500;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Source Code Pro', 'monospace'],
+                    },
+                    colors: {
+                        cambridge: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        .cloze-input {
+            transition: all 0.2s ease;
+        }
+        .cloze-input:focus {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- TOP HEADER / NAVIGATION -->
+    <header class="bg-slate-950 border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-cyan-950">
+                        B2
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg text-white leading-tight flex items-center gap-2">
+                            FCE Use of English <span class="bg-cyan-950 text-cyan-400 text-xs px-2 py-0.5 rounded-full border border-cyan-800/50 font-semibold">B2 First</span>
+                        </h1>
+                        <p class="text-xs text-slate-400">Cambridge Exam Trainer & Revision Suite</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-800">
+                    <button onclick="switchTab('practice')" id="nav-practice" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-white bg-slate-800 shadow-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-cyan-400"></i> Practice Mode
+                    </button>
+                    <button onclick="switchTab('mock')" id="nav-mock" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-stopwatch text-amber-400"></i> Timed Mock Exam
+                    </button>
+                    <button onclick="switchTab('revision')" id="nav-revision" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-emerald-400"></i> Revision Hub
+                    </button>
+                    <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-400 hover:text-white transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-purple-400"></i> Analytics & Stats
+                    </button>
+                </nav>
+
+                <!-- Exam Score Summary Badge -->
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex flex-col items-end">
+                        <span class="text-xs text-slate-400">Est. B2 Scale Score</span>
+                        <span id="global-scale-score" class="text-sm font-bold text-cyan-400">168 <span class="text-xs text-emerald-400 font-normal">(Grade C Pass)</span></span>
+                    </div>
+                    <button onclick="resetAllProgress()" title="Reset Session Data" class="p-2 text-slate-400 hover:text-rose-400 bg-slate-900 hover:bg-slate-800 rounded-lg border border-slate-800 transition">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Navigation Subbar -->
+        <div class="md:hidden flex border-t border-slate-800/80 bg-slate-950 overflow-x-auto px-2 py-1.5 gap-1">
+            <button onclick="switchTab('practice')" class="mobile-nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-semibold text-white bg-slate-800">Practice</button>
+            <button onclick="switchTab('mock')" class="mobile-nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400">Mock Exam</button>
+            <button onclick="switchTab('revision')" class="mobile-nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400">Revision</button>
+            <button onclick="switchTab('analytics')" class="mobile-nav-btn whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400">Analytics</button>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+
+        <!-- ==================== 1. PRACTICE MODE VIEW ==================== -->
+        <section id="view-practice" class="app-view flex flex-col gap-6">
+            
+            <!-- Part Selector Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button onclick="selectPracticePart(1)" id="part-tab-1" class="part-tab-btn p-4 rounded-xl border text-left transition-all bg-slate-800/90 border-cyan-500/50 text-white shadow-lg shadow-cyan-950/20">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">Part 1</span>
+                        <span class="text-xs bg-slate-950 px-2 py-0.5 rounded text-slate-400 font-mono">8 Qs</span>
+                    </div>
+                    <div class="font-bold text-sm">Multiple-Choice Cloze</div>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-1">Vocabulary, phrasal verbs & idioms</p>
+                </button>
+
+                <button onclick="selectPracticePart(2)" id="part-tab-2" class="part-tab-btn p-4 rounded-xl border text-left transition-all bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Part 2</span>
+                        <span class="text-xs bg-slate-950 px-2 py-0.5 rounded text-slate-400 font-mono">8 Qs</span>
+                    </div>
+                    <div class="font-bold text-sm">Open Cloze</div>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-1">Grammar, prepositions & linkers</p>
+                </button>
+
+                <button onclick="selectPracticePart(3)" id="part-tab-3" class="part-tab-btn p-4 rounded-xl border text-left transition-all bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Part 3</span>
+                        <span class="text-xs bg-slate-950 px-2 py-0.5 rounded text-slate-400 font-mono">8 Qs</span>
+                    </div>
+                    <div class="font-bold text-sm">Word Formation</div>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-1">Prefixes, suffixes & stem changes</p>
+                </button>
+
+                <button onclick="selectPracticePart(4)" id="part-tab-4" class="part-tab-btn p-4 rounded-xl border text-left transition-all bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Part 4</span>
+                        <span class="text-xs bg-slate-950 px-2 py-0.5 rounded text-slate-400 font-mono">6 Qs (12 pts)</span>
+                    </div>
+                    <div class="font-bold text-sm">Key Word Transformation</div>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-1">Advanced structures & rewrites</p>
+                </button>
+            </div>
+
+            <!-- Set Selector & Instructions Bar -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-semibold text-slate-300">Select Exercise Set:</span>
+                    <div class="flex items-center gap-2">
+                        <button onclick="loadPracticeSet(0)" id="set-btn-0" class="set-select-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600 text-white">Set 1 (Standard)</button>
+                        <button onclick="loadPracticeSet(1)" id="set-btn-1" class="set-select-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">Set 2 (Advanced)</button>
+                        <button onclick="loadPracticeSet(2)" id="set-btn-2" class="set-select-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700">Set 3 (Exam Challenge)</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="togglePracticeHints()" id="btn-toggle-hints" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-950/40 text-amber-400 border border-amber-800/40 hover:bg-amber-900/40 transition">
+                        <i class="fa-regular fa-lightbulb"></i> <span id="hint-btn-text font-medium">Show Hints</span>
+                    </button>
+                    <button onclick="resetPracticeSet()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                        <i class="fa-solid fa-arrows-rotate"></i> Reset
+                    </button>
+                    <button onclick="checkPracticeAnswers()" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-lg shadow-emerald-950/30">
+                        <i class="fa-solid fa-check-double"></i> Check Answers
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exercise Display Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Main Passage / Task Box (LGs 8 cols) -->
+                <div class="lg:col-span-8 flex flex-col gap-4">
+                    <div class="bg-slate-900/90 p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl relative">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                            <div>
+                                <span id="exercise-part-title" class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Part 1: Multiple Choice Cloze</span>
+                                <h2 id="exercise-heading" class="text-xl font-bold text-white mt-0.5">The Power of Music</h2>
+                            </div>
+                            <span id="exercise-status" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">Not Checked</span>
+                        </div>
+
+                        <!-- Instructions -->
+                        <div id="exercise-instructions" class="text-xs text-slate-400 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 mb-6 flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-info text-cyan-400 text-sm mt-0.5"></i>
+                            <span>For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.</span>
+                        </div>
+
+                        <!-- Dynamic Passage / Task Content -->
+                        <div id="practice-content-area" class="prose prose-invert max-w-none text-slate-300 text-base leading-relaxed space-y-4">
+                            <!-- Injected by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanations & Grammar Sidebar (LGs 4 cols) -->
+                <div class="lg:col-span-4 flex flex-col gap-4">
+                    <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl flex-1 flex flex-col">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3 mb-4">
+                            <i class="fa-solid fa-graduation-cap text-cyan-400"></i> Grammar & Lexical Explanations
+                        </h3>
+
+                        <div id="explanation-panel" class="flex-1 overflow-y-auto space-y-3 max-h-[600px] pr-1">
+                            <div class="text-center py-12 text-slate-500 text-sm">
+                                <i class="fa-regular fa-comment-dots text-3xl mb-2 block"></i>
+                                Complete the gaps and click <strong>Check Answers</strong> to unlock line-by-line B2 grammar notes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ==================== 2. MOCK EXAM VIEW ==================== -->
+        <section id="view-mock" class="app-view hidden flex-col gap-6">
+            
+            <!-- Exam Status Header Bar -->
+            <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 rounded-2xl border border-indigo-800/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 text-2xl">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Full Cambridge B2 Use of English Mock Exam</h2>
+                        <p class="text-xs text-slate-400">Parts 1–4 complete test (32 items total | Max Score: 36 marks)</p>
+                    </div>
+                </div>
+
+                <!-- Timer & Controls -->
+                <div class="flex items-center gap-4">
+                    <div class="bg-slate-950/80 px-4 py-2 rounded-xl border border-slate-800 flex items-center gap-3">
+                        <i class="fa-solid fa-clock text-amber-400 animate-pulse"></i>
+                        <div>
+                            <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Time Remaining</div>
+                            <div id="mock-timer" class="font-mono text-lg font-bold text-white">45:00</div>
+                        </div>
+                    </div>
+                    <button id="mock-start-btn" onclick="startMockExam()" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-cyan-600 hover:bg-cyan-500 text-white transition shadow-lg shadow-cyan-950/40 flex items-center gap-2">
+                        <i class="fa-solid fa-play"></i> Start Exam
+                    </button>
+                    <button id="mock-submit-btn" onclick="submitMockExam()" class="hidden px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white transition shadow-lg shadow-emerald-950/40 flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Paper
+                    </button>
+                </div>
+            </div>
+
+            <!-- Exam Container -->
+            <div id="mock-exam-container" class="opacity-50 pointer-events-none transition-all flex flex-col gap-8">
+                <!-- Exam Parts injected dynamically -->
+            </div>
+
+            <!-- Mock Exam Result Modal / Overlay -->
+            <div id="mock-results-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="w-16 h-16 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-3xl mx-auto">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">Mock Exam Results</h3>
+                        <p class="text-xs text-slate-400">Official Cambridge English Scale Score Equivalent</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-medium">Raw Marks</span>
+                            <span id="modal-raw-score" class="text-xl font-black text-white">28 / 36</span>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-medium">Scale Score</span>
+                            <span id="modal-scale-score" class="text-xl font-black text-cyan-400">173</span>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-medium">CEFR Grade</span>
+                            <span id="modal-grade" class="text-xl font-black text-emerald-400">Grade B</span>
+                        </div>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block font-medium">Status</span>
+                            <span id="modal-pass-status" class="text-xl font-black text-emerald-400">PASS</span>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Table -->
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Performance by Part</h4>
+                        <div class="space-y-1.5 text-xs">
+                            <div class="flex justify-between items-center p-2 bg-slate-950/60 rounded-lg">
+                                <span>Part 1 (Multiple Choice)</span>
+                                <span id="modal-p1-score" class="font-bold text-white">7/8</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-slate-950/60 rounded-lg">
+                                <span>Part 2 (Open Cloze)</span>
+                                <span id="modal-p2-score" class="font-bold text-white">6/8</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-slate-950/60 rounded-lg">
+                                <span>Part 3 (Word Formation)</span>
+                                <span id="modal-p3-score" class="font-bold text-white">7/8</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-slate-950/60 rounded-lg">
+                                <span>Part 4 (Transformation)</span>
+                                <span id="modal-p4-score" class="font-bold text-white">8/12</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button onclick="closeMockModal()" class="w-full py-3 rounded-xl font-bold text-sm bg-cyan-600 hover:bg-cyan-500 text-white transition">
+                            Review Exam Answers & Explanations
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ==================== 3. REVISION HUB VIEW ==================== -->
+        <section id="view-revision" class="app-view hidden flex-col gap-6">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white">B2 Use of English Revision Reference</h2>
+                    <p class="text-xs text-slate-400">Essential grammar rules, collocation lists, prefix/suffix matrices & transformation keys</p>
+                </div>
+
+                <!-- Revision Search -->
+                <div class="relative w-full sm:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-500 text-xs"></i>
+                    <input type="text" id="revision-search" oninput="filterRevisionContent()" placeholder="Search rules, words..." class="w-full bg-slate-950 border border-slate-800 text-xs text-white rounded-xl pl-9 pr-3 py-2.5 focus:outline-none focus:border-cyan-500">
+                </div>
+            </div>
+
+            <!-- Sub-tabs for Revision topics -->
+            <div class="flex border-b border-slate-800 overflow-x-auto gap-4">
+                <button onclick="switchRevisionTab('collocations')" id="rev-tab-collocations" class="rev-tab border-b-2 border-cyan-500 pb-3 text-sm font-bold text-cyan-400">Part 1: Collocations & Prepositions</button>
+                <button onclick="switchRevisionTab('grammar')" id="rev-tab-grammar" class="rev-tab border-b-2 border-transparent pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200">Part 2: Grammar Fillers</button>
+                <button onclick="switchRevisionTab('wordformation')" id="rev-tab-wordformation" class="rev-tab border-b-2 border-transparent pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200">Part 3: Word Formation Matrix</button>
+                <button onclick="switchRevisionTab('transformations')" id="rev-tab-transformations" class="rev-tab border-b-2 border-transparent pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200">Part 4: 15 Core Structures</button>
+            </div>
+
+            <!-- Revision Content Panels -->
+            <div id="revision-panel-container" class="space-y-6">
+                <!-- Dynamic Revision Panels -->
+            </div>
+
+        </section>
+
+
+        <!-- ==================== 4. ANALYTICS VIEW ==================== -->
+        <section id="view-analytics" class="app-view hidden flex-col gap-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Overall Accuracy</div>
+                        <div id="stat-accuracy" class="text-2xl font-black text-white">74%</div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-950 border border-indigo-800 text-indigo-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-file-check"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Questions Attempted</div>
+                        <div id="stat-attempted" class="text-2xl font-black text-white">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-950 border border-emerald-800 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Mocks Completed</div>
+                        <div id="stat-mocks" class="text-2xl font-black text-white">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-950 border border-amber-800 text-amber-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-medium">Weakest Area</div>
+                        <div id="stat-weakest" class="text-sm font-bold text-amber-400">Part 4 (Transformations)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breakdown Charts / Progress Indicators -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Accuracy Breakdown -->
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-chart-bar text-cyan-400"></i> Performance by Paper Part
+                    </h3>
+                    <div class="space-y-4 pt-2">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Part 1: Multiple Choice Cloze</span>
+                                <span id="bar-val-1" class="text-cyan-400">0%</span>
+                            </div>
+                            <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden">
+                                <div id="bar-fill-1" class="h-full bg-cyan-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Part 2: Open Cloze</span>
+                                <span id="bar-val-2" class="text-cyan-400">0%</span>
+                            </div>
+                            <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden">
+                                <div id="bar-fill-2" class="h-full bg-indigo-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Part 3: Word Formation</span>
+                                <span id="bar-val-3" class="text-cyan-400">0%</span>
+                            </div>
+                            <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden">
+                                <div id="bar-fill-3" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-300">Part 4: Key Word Transformation</span>
+                                <span id="bar-val-4" class="text-cyan-400">0%</span>
+                            </div>
+                            <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden">
+                                <div id="bar-fill-4" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B2 Grading Scale Chart Guide -->
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-cyan-400"></i> Cambridge Scale Score Guide
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="p-3 bg-slate-950 rounded-xl border border-emerald-500/30 flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-emerald-400 block">Grade A (C1 Level)</span>
+                                <span class="text-slate-400">Scale score 180–190 (Raw 32–36 pts)</span>
+                            </div>
+                            <span class="px-2.5 py-1 bg-emerald-950 text-emerald-400 rounded-md font-mono font-bold">180+</span>
+                        </div>
+                        <div class="p-3 bg-slate-950 rounded-xl border border-cyan-500/30 flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-cyan-400 block">Grade B (B2 Pass)</span>
+                                <span class="text-slate-400">Scale score 173–179 (Raw 28–31 pts)</span>
+                            </div>
+                            <span class="px-2.5 py-1 bg-cyan-950 text-cyan-400 rounded-md font-mono font-bold">173+</span>
+                        </div>
+                        <div class="p-3 bg-slate-950 rounded-xl border border-blue-500/30 flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-blue-400 block">Grade C (B2 Pass)</span>
+                                <span class="text-slate-400">Scale score 160–172 (Raw 24–27 pts)</span>
+                            </div>
+                            <span class="px-2.5 py-1 bg-blue-950 text-blue-400 rounded-md font-mono font-bold">160+</span>
+                        </div>
+                        <div class="p-3 bg-slate-950 rounded-xl border border-rose-500/30 flex items-center justify-between">
+                            <div>
+                                <span class="font-bold text-rose-400 block">Level B1 (Fail B2)</span>
+                                <span class="text-slate-400">Scale score 140–159 (Raw &lt; 24 pts)</span>
+                            </div>
+                            <span class="px-2.5 py-1 bg-rose-950 text-rose-400 rounded-md font-mono font-bold">&lt; 160</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Log / Recent History Table -->
+            <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left text-cyan-400"></i> Recent Practice History
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-950 text-slate-400 uppercase font-bold border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Date</th>
+                                <th class="p-3">Mode / Paper</th>
+                                <th class="p-3">Set</th>
+                                <th class="p-3">Score</th>
+                                <th class="p-3">Accuracy</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-slate-800">
+                            <tr>
+                                <td colspan="5" class="p-4 text-center text-slate-500">No session history yet. Complete exercises to populate analytics!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <span>Cambridge English: B2 First (FCE) Use of English Interactive Suite</span>
+            <span class="text-slate-600">Aligned with CEFR B2 Standard</span>
+        </div>
+    </footer>
+
+    <!-- APP SCRIPT & DATA ENGINE -->
+    <script>
+        /* ==================== DATABASE OF AUTHENTIC B2 EXAM QUESTIONS ==================== */
+        const EXAM_DATABASE = {
+            part1: [
+                {
+                    title: "The Power of Music",
+                    setIndex: 0,
+                    text: `Music has always played a vital role in human culture, but scientists are only now beginning to understand its deep (1) ___ on the brain. Research has shown that listening to music can (2) ___ stress levels and boost mood by releasing dopamine. Furthermore, learning to play a musical instrument has been found to (3) ___ memory and concentration skills, especially in young children. Experts (4) ___ that regular musical training can actually alter the physical structure of the brain. In (5) ___ to its cognitive benefits, music therapeutic techniques are frequently (6) ___ to patients recovering from injuries. It is clear that music is far more than just a form of entertainment; it is a fundamental tool for well-being that can (7) ___ individuals together regardless of their cultural (8) ___.`,
+                    options: [
+                        { gap: 1, choices: ["effect", "impact", "result", "consequence"], answer: 1, explanation: "'Impact on' is the correct dependent preposition collocation here. While 'effect' works with 'on', 'deep impact on' best fits the context of brain change." },
+                        { gap: 2, choices: ["reduce", "decline", "drop", "shrink"], answer: 0, explanation: "'Reduce stress levels' is a standard B2 collocation. 'Decline' and 'drop' are intransitive here." },
+                        { gap: 3, choices: ["rise", "enhance", "raise", "promote"], answer: 1, explanation: "You 'enhance' skills or memory. 'Rise' is intransitive; 'raise' applies to numbers/rates." },
+                        { gap: 4, choices: ["claim", "tell", "speak", "inform"], answer: 0, explanation: "Experts 'claim that...'. 'Tell' and 'inform' require an object (e.g. tell someone)." },
+                        { gap: 5, choices: ["addition", "fact", "order", "regard"], answer: 0, explanation: "The fixed link expression is 'In addition to...' (+ noun/gerund)." },
+                        { gap: 6, choices: ["applied", "conducted", "operated", "practised"], answer: 0, explanation: "Therapeutic techniques are 'applied to' patients." },
+                        { gap: 7, choices: ["bring", "fetch", "gather", "join"], answer: 0, explanation: "Phrasal verb / expression: 'bring individuals together'." },
+                        { gap: 8, choices: ["backgrounds", "origins", "histories", "frameworks"], answer: 0, explanation: "'Cultural backgrounds' is the standard compound phrase." }
+                    ]
+                },
+                {
+                    title: "Secrets of Deep Sleep",
+                    setIndex: 1,
+                    text: `Getting a good night’s sleep is essential for maintaining physical and mental health. However, millions of people worldwide suffer from sleep deprivation, often (1) ___ to modern lifestyle habits. Constant exposure to blue light from smartphones can (2) ___ with the body's natural sleep cycle. Experts recommend (3) ___ a strict bedtime routine to signal to the brain that it is time to rest. Avoiding caffeine in the evening is also highly (4) ___. (5) ___ to popular belief, taking a warm bath before bed actually helps cool the body down, which promotes sleep. If you still find yourself lying awake, it is best to get out of bed rather than (6) ___ turning over endlessly. Taking control of your sleep habits will undoubtedly (7) ___ in improved energy levels and better overall focus (8) ___ the day.`,
+                    options: [
+                        { gap: 1, choices: ["due", "because", "owing", "thanks"], answer: 0, explanation: "'Due to' means caused by. 'Owing to' is also valid grammatically, but 'due to' is the primary choice with 'often'." },
+                        { gap: 2, choices: ["interfere", "interrupt", "disturb", "prevent"], answer: 0, explanation: "'Interfere with' takes the preposition 'with'." },
+                        { gap: 3, choices: ["establishing", "building", "making", "founding"], answer: 0, explanation: "You 'establish a routine' (fixed collocation)." },
+                        { gap: 4, choices: ["advised", "suggested", "recommended", "proposed"], answer: 2, explanation: "'Highly recommended' is a very common fixed B2 collocation." },
+                        { gap: 5, choices: ["Contrary", "Opposed", "Different", "In contrast"], answer: 0, explanation: "Fixed preposition phrase: 'Contrary to popular belief'." },
+                        { gap: 6, choices: ["simply", "merely", "barely", "hardly"], answer: 0, explanation: "'Simply turning over' means just/only doing that action." },
+                        { gap: 7, choices: ["result", "lead", "cause", "create"], answer: 0, explanation: "Verb + Preposition: 'result in' (+ noun)." },
+                        { gap: 8, choices: ["throughout", "during", "along", "across"], answer: 0, explanation: "'Throughout the day' means across the entire duration of the day." }
+                    ]
+                },
+                {
+                    title: "The History of Coffee",
+                    setIndex: 2,
+                    text: `Coffee is one of the most widely consumed beverages in the world, with over two billion cups enjoyed daily. Legends suggest that coffee was first (1) ___ by a goat herd in Ethiopia who noticed his animals became energetic after eating specific berries. The custom of drinking coffee soon (2) ___ across the Arabian Peninsula, where public coffee houses began to (3) ___. By the 17th century, coffee had made its (4) ___ to Europe, where it quickly became popular among intellectuals and businessmen. (5) ___ initial opposition from religious leaders who viewed it with suspicion, coffee houses flourished. Today, the coffee industry is a major economic force, (6) ___ millions of jobs worldwide. Whether enjoyed for its rich flavor or its stimulating effects, coffee remains deeply (7) ___ in daily human life across almost every (8) ___ of the globe.`,
+                    options: [
+                        { gap: 1, choices: ["discovered", "invented", "created", "found"], answer: 0, explanation: "Natural plants/phenomena are 'discovered', not invented." },
+                        { gap: 2, choices: ["spread", "expanded", "stretched", "passed"], answer: 0, explanation: "Customs or news 'spread across' a region." },
+                        { gap: 3, choices: ["appear", "arise", "emerge", "turn up"], answer: 0, explanation: "Coffee houses began to 'appear' (become visible/present)." },
+                        { gap: 4, choices: ["way", "path", "route", "direction"], answer: 0, explanation: "Fixed idiom: 'make one's way to' a place." },
+                        { gap: 5, choices: ["Despite", "Although", "However", "In spite"], answer: 0, explanation: "'Despite' takes a direct noun phrase ('initial opposition'). 'In spite' requires 'of'." },
+                        { gap: 6, choices: ["providing", "offering", "supporting", "serving"], answer: 0, explanation: "The industry is 'providing jobs' to people." },
+                        { gap: 7, choices: ["rooted", "fixed", "attached", "bound"], answer: 0, explanation: "Fixed expression: 'deeply rooted in daily life'." },
+                        { gap: 8, choices: ["corner", "side", "part", "section"], answer: 0, explanation: "Idiomatic phrase: 'every corner of the globe'." }
+                    ]
+                }
+            ],
+
+            part2: [
+                {
+                    title: "The Rise of Urban Gardening",
+                    setIndex: 0,
+                    text: `Growing food in cities has become incredibly popular in recent years, especially (1) ___ city dwellers who lack access to traditional gardens. Not only does urban gardening provide fresh organic produce, (2) ___ it also helps transform unused rooftops and concrete spaces into vibrant green hubs. People (3) ___ live in small apartments are finding clever ways to make the (4) ___ of limited space, using vertical planters and hanging baskets. Taking care (5) ___ plants has been shown to reduce stress and improve mental well-being. There is no doubt (6) ___ urban agriculture encourages a sense of community as neighbors share tools and advice. Even (7) ___ you only have space for a single window box with fresh herbs, getting started is easier than you might think. Why not set (8) ___ your own mini garden today?`,
+                    answers: [
+                        ["among", "with"],
+                        ["but"],
+                        ["who", "that"],
+                        ["most"],
+                        ["of"],
+                        ["that"],
+                        ["if"],
+                        ["up"]
+                    ],
+                    explanations: [
+                        "1: Preposition 'among' or 'with' fits before plural noun phrase 'city dwellers'.",
+                        "2: Correlative conjunction structure: 'Not only... BUT (also)...'",
+                        "3: Relative pronoun referring to people: 'who' or 'that'.",
+                        "4: Fixed idiom: 'make the MOST of' (to derive maximum benefit).",
+                        "5: Dependent preposition after noun: 'take care OF'.",
+                        "6: Conjunction following noun clause: 'no doubt THAT...'",
+                        "7: Conditional clause linker: 'Even IF you only have space...'",
+                        "8: Phrasal verb: 'set UP' (to establish/assemble)."
+                    ]
+                },
+                {
+                    title: "Learning Languages Online",
+                    setIndex: 1,
+                    text: `In the modern digital age, learning a foreign language has never (1) ___ easier. Thanks to mobile applications and interactive websites, students (2) ___ longer need to sit in traditional classrooms for hours. Instead, they can practice speaking and listening (3) ___ any time of day that suits their schedule. One of the main advantages of digital learning is (4) ___ learners can progress at their own pace. However, experts stress that consistency is key; studying for fifteen minutes every day is far (5) ___ effective than cramming for five hours once a week. Furthermore, connecting with native speakers online gives students an opportunity to put their skills (6) ___ practice in real conversations. As (7) ___ as you stay motivated, you will undoubtedly make rapid progress (8) ___ matter how difficult the language initially seems.`,
+                    answers: [
+                        ["been"],
+                        ["no"],
+                        ["at"],
+                        ["that"],
+                        ["more"],
+                        ["into"],
+                        ["long"],
+                        ["no"]
+                    ],
+                    explanations: [
+                        "1: Present perfect passive structure: 'has never BEEN easier'.",
+                        "2: Adverbial modifier: 'NO longer' (meaning not anymore).",
+                        "3: Preposition of time: 'AT any time of day'.",
+                        "4: Complement clause linker: 'the advantage is THAT...'",
+                        "5: Comparative degree modifier before adjective: 'FAR MORE effective than'.",
+                        "6: Preposition phrase: 'put skills INTO practice'.",
+                        "7: Subordinating conjunction: 'As LONG as' (provided that).",
+                        "8: Fixed phrase: 'NO matter how...'."
+                    ]
+                },
+                {
+                    title: "The Invention of the Bicycle",
+                    setIndex: 2,
+                    text: `The bicycle is one of the most efficient forms of transport ever invented. The very first two-wheeled vehicle (1) ___ created in Germany in 1817 by Baron Karl von Drais. However, this early version did (2) ___ have any pedals; riders had to push themselves along by walking on the ground. It was not (3) ___ the 1860s that French inventors added cranks and pedals to the front wheel, making the bicycle much faster. Over the years, numerous improvements (4) ___ made to the design, including inflatable rubber tires and lightweight frames. Today, cycling is enjoyed by millions of people all (5) ___ the world, both as a hobby and as an eco-friendly way of commuting. (6) ___ addition to being good for the environment, cycling is great (7) ___ your physical fitness. In fact, doctors frequently recommend cycling to patients (8) ___ suffer from joint pain or heart problems.`,
+                    answers: [
+                        ["was"],
+                        ["not"],
+                        ["until"],
+                        ["were", "have been"],
+                        ["over", "around"],
+                        ["in"],
+                        ["for"],
+                        ["who", "that"]
+                    ],
+                    explanations: [
+                        "1: Past simple passive auxiliary verb: 'vehicle WAS created'.",
+                        "2: Negative auxiliary in past simple: 'did NOT have'.",
+                        "3: Time emphasis clause structure: 'It was not UNTIL [date] THAT...'",
+                        "4: Passive voice plural verb: 'improvements WERE made' / 'HAVE BEEN made'.",
+                        "5: Preposition of place: 'all OVER / AROUND the world'.",
+                        "6: Fixed linking phrase: 'IN addition to...'",
+                        "7: Preposition after adjective: 'great FOR your health'.",
+                        "8: Relative pronoun for people: 'patients WHO / THAT suffer'."
+                    ]
+                }
+            ],
+
+            part3: [
+                {
+                    title: "Extreme Weather Events",
+                    setIndex: 0,
+                    text: `In recent decades, climate change has led to an increase in (1) ___ weather conditions across the world. Scientists warn that storm patterns are becoming increasingly (2) ___, making it difficult for cities to prepare. Meteorological agencies now use advanced technology to monitor atmospheric changes with greater (3) ___. Despite these technological advancements, natural disasters can still cause (4) ___ damage to infrastructure. Consequently, governments are under pressure to take (5) ___ action to protect vulnerable coastal areas. It is vital for communities to raise (6) ___ about emergency protocols. Investing in renewable energy sources is widely seen as a key (7) ___ to reducing carbon emissions. Ultimately, solving this crisis requires global cooperation and (8) ___ commitment from all nations.`,
+                    stems: ["PREDICT", "GLOBE", "ACCURATE", "CONSIDER", "PREVENT", "AWARE", "SOLVE", "CONTINUE"],
+                    answers: ["UNPREDICTABLE", "GLOBAL", "ACCURACY", "CONSIDERABLE", "PREVENTATIVE", "AWARENESS", "SOLUTION", "CONTINUOUS"],
+                    explanations: [
+                        "1: PREDICT -> UNPREDICTABLE (adjective with negative prefix 'un-' fitting weather conditions).",
+                        "2: GLOBE -> GLOBAL (adjective describing storm patterns worldwide).",
+                        "3: ACCURATE -> ACCURACY (noun following preposition 'with').",
+                        "4: CONSIDER -> CONSIDERABLE (adjective meaning large/significant modifying 'damage').",
+                        "5: PREVENT -> PREVENTATIVE / PREVENTIVE (adjective modifying 'action').",
+                        "6: AWARE -> AWARENESS (noun after verb 'raise').",
+                        "7: SOLVE -> SOLUTION (noun after article 'a key...').",
+                        "8: CONTINUE -> CONTINUOUS / CONTINUED (adjective modifying 'commitment')."
+                    ]
+                },
+                {
+                    title: "The Psychology of Happiness",
+                    setIndex: 1,
+                    text: `What makes human beings truly happy? Psychologists have devoted (1) ___ research to answering this fundamental question. Surprisingly, material wealth does not guarantee long-term (2) ___. Once basic needs are met, additional money has a (3) ___ minor impact on daily satisfaction. Instead, meaningful (4) ___ with family and friends play a far more significant role. Furthermore, engaging in regular physical (5) ___ has been proven to release mood-boosting hormones. Experts also emphasize the (6) ___ of maintaining a positive mindset when facing life's challenges. People who practice gratitude on a (7) ___ basis tend to experience lower levels of anxiety. Developing psychological resilience is therefore essential for personal (8) ___.`,
+                    stems: ["COUNT", "HAPPY", "COMPARE", "RELATION", "ACT", "IMPORTANT", "DAY", "GROW"],
+                    answers: ["COUNTLESS", "HAPPINESS", "COMPARATIVELY", "RELATIONSHIPS", "ACTIVITY", "IMPORTANCE", "DAILY", "GROWTH"],
+                    explanations: [
+                        "1: COUNT -> COUNTLESS (adjective meaning infinite/innumerable).",
+                        "2: HAPPY -> HAPPINESS (noun after adjective 'long-term').",
+                        "3: COMPARE -> COMPARATIVELY (adverb modifying adjective 'minor').",
+                        "4: RELATION -> RELATIONSHIPS (plural noun after adjective 'meaningful').",
+                        "5: ACT -> ACTIVITY (noun after 'physical').",
+                        "6: IMPORTANT -> IMPORTANCE (noun after article 'the').",
+                        "7: DAY -> DAILY (adjective modifying noun 'basis').",
+                        "8: GROW -> GROWTH (noun after adjective 'personal')."
+                    ]
+                },
+                {
+                    title: "Space Exploration",
+                    setIndex: 2,
+                    text: `Space exploration has captured human imagination for centuries. Early astronomers relied on simple telescopes to observe celestial bodies, but modern space travel requires (1) ___ complex engineering. The launch of artificial satellites revolutionized global (2) ___, allowing instant data transmission worldwide. Astronauts living aboard the International Space Station conduct groundbreaking (3) ___ experiments in microgravity conditions. Their findings provide (4) ___ insights into human health and physics. However, deep space missions present severe (5) ___ challenges, including radiation and isolation. Engineers are currently working on developing more (6) ___ propulsion systems to shorten travel times to Mars. Supporters argue that space programs drive technological (7) ___ that benefits society as a whole. Undoubtedly, space exploration remains one of humanity's greatest (8) ___.`,
+                    stems: ["INCREDIBLE", "COMMUNICATE", "SCIENCE", "VALUE", "PHYSIOLOGY", "EFFECT", "INNOVATE", "ACHIEVE"],
+                    answers: ["INCREDIBLY", "COMMUNICATIONS", "SCIENTIFIC", "VALUABLE", "PHYSIOLOGICAL", "EFFECTIVE", "INNOVATION", "ACHIEVEMENTS"],
+                    explanations: [
+                        "1: INCREDIBLE -> INCREDIBLY (adverb modifying adjective 'complex').",
+                        "2: COMMUNICATE -> COMMUNICATIONS / COMMUNICATION (noun after 'global').",
+                        "3: SCIENCE -> SCIENTIFIC (adjective modifying 'experiments').",
+                        "4: VALUE -> VALUABLE (adjective modifying 'insights').",
+                        "5: PHYSIOLOGY -> PHYSIOLOGICAL (adjective modifying 'challenges').",
+                        "6: EFFECT -> EFFECTIVE (adjective modifying 'propulsion systems').",
+                        "7: INNOVATE -> INNOVATION (noun after adjective 'technological').",
+                        "8: ACHIEVE -> ACHIEVEMENTS (plural noun after 'one of humanity's greatest...')."
+                    ]
+                }
+            ],
+
+            part4: [
+                {
+                    title: "Key Word Transformations",
+                    setIndex: 0,
+                    items: [
+                        {
+                            original: "I haven't seen Sarah for three years.",
+                            keyword: "LAST",
+                            lead: "It is three years",
+                            trail: "Sarah.",
+                            answer: "since I last saw",
+                            alternatives: ["since i last saw"],
+                            part1: "since I",
+                            part2: "last saw",
+                            explanation: "Time structure transformation: 'haven't [done] for [period]' -> 'It is [period] since I last [past simple]'."
+                        },
+                        {
+                            original: "You must not leave the building under any circumstances.",
+                            keyword: "NO",
+                            lead: "Under",
+                            trail: "leave the building.",
+                            answer: "no circumstances must you",
+                            alternatives: ["no circumstances should you"],
+                            part1: "no circumstances",
+                            part2: "must you",
+                            explanation: "Inversion after negative adverbial phrase 'Under no circumstances' + auxiliary + subject + verb."
+                        },
+                        {
+                            original: "They are repairing the roof of the house at the moment.",
+                            keyword: "BEING",
+                            lead: "The roof of the house",
+                            trail: "at the moment.",
+                            answer: "is being repaired",
+                            alternatives: ["is being repaired by them"],
+                            part1: "is being",
+                            part2: "repaired",
+                            explanation: "Present continuous active -> Present continuous passive ('is being repaired')."
+                        },
+                        {
+                            original: "I regret not studying harder for the final exam.",
+                            keyword: "WISH",
+                            lead: "I",
+                            trail: "harder for the final exam.",
+                            answer: "wish I had studied",
+                            alternatives: ["wish i had studied"],
+                            part1: "wish I had",
+                            part2: "studied",
+                            explanation: "Regret about the past: 'I wish' + Past Perfect ('had studied')."
+                        },
+                        {
+                            original: "'Don't touch the wire,' the electrician warned us.",
+                            keyword: "NOT",
+                            lead: "The electrician warned",
+                            trail: "the wire.",
+                            answer: "us not to touch",
+                            alternatives: ["us not to touch"],
+                            part1: "us not",
+                            part2: "to touch",
+                            explanation: "Reported imperative/warning: 'warned [object] + not + to-infinitive'."
+                        },
+                        {
+                            original: "Although it rained heavily, we enjoyed the outdoor concert.",
+                            keyword: "SPITE",
+                            lead: "In",
+                            trail: "rain, we enjoyed the outdoor concert.",
+                            answer: "spite of the heavy",
+                            alternatives: ["spite of the"],
+                            part1: "spite of",
+                            part2: "the heavy",
+                            explanation: "Conjunction shift: 'Although + clause' -> 'In spite of + noun phrase'."
+                        }
+                    ]
+                },
+                {
+                    title: "Key Word Transformations",
+                    setIndex: 1,
+                    items: [
+                        {
+                            original: "I prefer staying at home to going out in the rain.",
+                            keyword: "RATHER",
+                            lead: "I would",
+                            trail: "go out in the rain.",
+                            answer: "rather stay at home than",
+                            alternatives: ["rather stay home than"],
+                            part1: "rather stay at home",
+                            part2: "than",
+                            explanation: "Preference structure: 'prefer -ing to -ing' -> 'would rather [bare infinitive] THAN [bare infinitive]'."
+                        },
+                        {
+                            original: "It's possible that Mark missed the train this morning.",
+                            keyword: "HAVE",
+                            lead: "Mark",
+                            trail: "the train this morning.",
+                            answer: "may have missed",
+                            alternatives: ["might have missed", "could have missed"],
+                            part1: "may have",
+                            part2: "missed",
+                            explanation: "Modal of deduction about past possibility: 'may/might/could HAVE + past participle'."
+                        },
+                        {
+                            original: "Someone stolen my bicycle while I was in the shop.",
+                            keyword: "HAD",
+                            lead: "I",
+                            trail: "while I was in the shop.",
+                            answer: "had my bicycle stolen",
+                            alternatives: ["had my bike stolen"],
+                            part1: "had my bicycle",
+                            part2: "stolen",
+                            explanation: "Causative structure: 'have something done' in past simple ('had my bicycle stolen')."
+                        },
+                        {
+                            original: "Can you tell me where the post office is?",
+                            keyword: "KNOW",
+                            lead: "Do you",
+                            trail: "where the post office is?",
+                            answer: "happen to know",
+                            alternatives: ["happen to know"],
+                            part1: "happen to",
+                            part2: "know",
+                            explanation: "Polite indirect question formula: 'Do you happen to know...'."
+                        },
+                        {
+                            original: "If you don't hurry up, we will miss the start of the movie.",
+                            keyword: "UNLESS",
+                            lead: "We will miss the start of the movie",
+                            trail: "up.",
+                            answer: "unless you hurry",
+                            alternatives: ["unless you hurry"],
+                            part1: "unless you",
+                            part2: "hurry",
+                            explanation: "Negative conditional: 'unless' replaces 'if... not'."
+                        },
+                        {
+                            original: "He started working for this company five years ago.",
+                            keyword: "FOR",
+                            lead: "He",
+                            trail: "five years.",
+                            answer: "has been working here for",
+                            alternatives: ["has worked here for", "has been working for"],
+                            part1: "has been working",
+                            part2: "for",
+                            explanation: "Action starting in past and continuing to present: Present Perfect Continuous + 'for'."
+                        }
+                    ]
+                },
+                {
+                    title: "Key Word Transformations",
+                    setIndex: 2,
+                    items: [
+                        {
+                            original: "The weather was so bad that we cancelled the picnic.",
+                            keyword: "SUCH",
+                            lead: "It was",
+                            trail: "that we cancelled the picnic.",
+                            answer: "such bad weather",
+                            alternatives: ["such terrible weather"],
+                            part1: "such bad",
+                            part2: "weather",
+                            explanation: "Structure change: 'so + adjective' -> 'such + adjective + uncountable noun' (weather is uncountable)."
+                        },
+                        {
+                            original: "I am sure that Peter wasn't at the party last night.",
+                            keyword: "HAVE",
+                            lead: "Peter",
+                            trail: "at the party last night.",
+                            answer: "can't have been",
+                            alternatives: ["cannot have been"],
+                            part1: "can't have",
+                            part2: "been",
+                            explanation: "Negative logical deduction in the past: 'can't have + past participle'."
+                        },
+                        {
+                            original: "She managed to finish the marathon despite her injury.",
+                            keyword: "SUCCEEDED",
+                            lead: "She",
+                            trail: "the marathon despite her injury.",
+                            answer: "succeeded in finishing",
+                            alternatives: ["succeeded in finishing"],
+                            part1: "succeeded in",
+                            part2: "finishing",
+                            explanation: "Verb pattern: 'manage + to-infinitive' -> 'succeed IN + gerund (-ing)'."
+                        },
+                        {
+                            original: "They will publish the new book next month.",
+                            keyword: "PUBLISHED",
+                            lead: "The new book",
+                            trail: "next month.",
+                            answer: "will be published",
+                            alternatives: ["will be published"],
+                            part1: "will be",
+                            part2: "published",
+                            explanation: "Future simple passive: 'will be + past participle'."
+                        },
+                        {
+                            original: "I'd rather you didn't smoke in the living room.",
+                            keyword: "MIND",
+                            lead: "Would you",
+                            trail: "in the living room?",
+                            answer: "mind not smoking",
+                            alternatives: ["mind not smoking"],
+                            part1: "mind not",
+                            part2: "smoking",
+                            explanation: "Polite request pattern: 'Would you mind NOT + gerund (-ing)'."
+                        },
+                        {
+                            original: "It was a mistake for you to buy that expensive jacket.",
+                            keyword: "SHOULD",
+                            lead: "You",
+                            trail: "that expensive jacket.",
+                            answer: "should not have bought",
+                            alternatives: ["shouldn't have bought"],
+                            part1: "should not have",
+                            part2: "bought",
+                            explanation: "Past criticism / regret: 'should not HAVE + past participle'."
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const REVISION_DATA = {
+            collocations: [
+                { term: "depend ON / rely ON", type: "Dependent Preposition", detail: "Never use 'of' or 'from'. Ex: 'Success depends ON your efforts.'" },
+                { term: "result IN vs result FROM", type: "Preposition Logic", detail: "Result IN = leads to outcome (cause -> effect). Result FROM = caused by (effect <- cause)." },
+                { term: "in spite OF / despite", type: "Contrast Linkers", detail: "'In spite OF' requires 'of'. 'Despite' NEVER takes 'of'. Both followed by noun/gerund." },
+                { term: "make the MOST of", type: "Fixed Idiom", detail: "To gain maximum advantage from a situation. (Common Part 1 & Part 2 gap)." },
+                { term: "take something FOR granted", type: "Collocation", detail: "To fail to appreciate something because you are accustomed to it." },
+                { term: "gain POPULARITY / EXPERIENCE", type: "Verb-Noun Collocation", detail: "Use 'gain' (not win or rise) with popularity, experience, speed, or momentum." },
+                { term: "contrary TO popular belief", type: "Fixed Phrase", detail: "Used to introduce a fact that opposes what people generally think." },
+                { term: "carry OUT research / an experiment", type: "Phrasal Verb", detail: "To perform or conduct a study or test." }
+            ],
+            grammar: [
+                { term: "Relative Pronouns (WHO vs WHICH vs THAT)", type: "Part 2 Focus", detail: "'Whose' shows possession. 'That' cannot follow prepositions or non-defining commas." },
+                { term: "Inversion (Under no circumstances / Hardly had I...)", type: "Word Order", detail: "Requires question word order after negative adverbs: 'Hardly HAD I arrived WHEN...'" },
+                { term: "Not ONLY... BUT ALSO", type: "Correlative Conjunctions", detail: "Pairing logic. If starting a sentence with 'Not only', invert the first clause!" },
+                { term: "SO + Adj + THAT vs SUCH + (a) + Adj + Noun + THAT", type: "Modifiers", detail: "'So fast that...' vs 'Such a fast car that...' (Note: Weather/advice are uncountable -> 'such bad weather')." }
+            ],
+            wordformation: [
+                { term: "Negative Prefixes", type: "un-, in-, im-, dis-, mis-, ir-, il-", detail: "Predict -> UNpredictable, Approve -> DISapproval, Understand -> MISunderstand, Responsible -> IRresponsible." },
+                { term: "Noun Suffixes", type: "-tion, -ment, -ness, -ity, -ance, -ship", detail: "Aware -> awareness, High -> height, Able -> ability, Member -> membership." },
+                { term: "Adjective Suffixes", type: "-able, -ive, -ous, -ful, -less", detail: "Consider -> considerable, Prevent -> preventative, Danger -> dangerous, Care -> careless." },
+                { term: "Adverb Suffixes & Spelling shifts", type: "-ly, -ally", detail: "Surprise -> surprisingly, Science -> scientifically, Day -> daily, Heavy -> heavily." }
+            ],
+            transformations: [
+                { pattern: "1. Wish / If Only (Past Regret)", formula: "I wish + Past Perfect", example: "I regret not studying -> I wish I HAD STUDIED." },
+                { pattern: "2. Passive Voice Conversion", formula: "Be + Past Participle", example: "They are repairing it -> It IS BEING REPAIRED." },
+                { pattern: "3. Reported Speech (Imperative)", formula: "warn / tell + Object + NOT to-infinitive", example: "'Don't touch!' -> He warned us NOT TO TOUCH." },
+                { pattern: "4. Prefer vs Would Rather", formula: "would rather + bare infinitive + THAN", example: "Prefer tea to coffee -> Would rather HAVE tea THAN coffee." },
+                { pattern: "5. Past Modals of Deduction", formula: "must / can't / might + HAVE + V3", example: "I'm sure he didn't see me -> He CAN'T HAVE SEEN me." },
+                { pattern: "6. Causative Have", formula: "have + Object + Past Participle", example: "Someone stole my phone -> I HAD MY PHONE STOLEN." }
+            ]
+        };
+
+
+        /* ==================== APP STATE MANAGEMENT ==================== */
+        let state = {
+            currentTab: 'practice',
+            practicePart: 1,
+            practiceSetIndex: 0,
+            showHints: false,
+            userAnswers: {},
+            checked: false,
+            
+            // Mock exam state
+            mockActive: false,
+            mockTimeRemaining: 2700, // 45 mins
+            mockTimerInterval: null,
+            mockAnswers: {},
+
+            // Statistics
+            stats: {
+                attempted: 0,
+                correct: 0,
+                partStats: {
+                    1: { total: 0, correct: 0 },
+                    2: { total: 0, correct: 0 },
+                    3: { total: 0, correct: 0 },
+                    4: { total: 0, correct: 0 }
+                },
+                mocksCompleted: 0,
+                history: []
+            }
+        };
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStateFromStorage();
+            renderPracticeView();
+            renderRevisionView();
+            updateAnalyticsUI();
+        });
+
+        /* ==================== TAB NAVIGATION ==================== */
+        function switchTab(tabName) {
+            state.currentTab = tabName;
+            document.querySelectorAll('.app-view').forEach(view => view.classList.add('hidden'));
+            document.querySelectorAll('.app-view').forEach(view => view.classList.remove('flex'));
+            
+            const targetView = document.getElementById(`view-${tabName}`);
+            targetView.classList.remove('hidden');
+            targetView.classList.add('flex');
+
+            // Update Navigation Button Active States
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-800', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-400');
+            });
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeNav) {
+                activeNav.classList.add('bg-slate-800', 'text-white', 'shadow-sm');
+                activeNav.classList.remove('text-slate-400');
+            }
+        }
+
+        /* ==================== PRACTICE MODE ENGINE ==================== */
+        function selectPracticePart(partNum) {
+            state.practicePart = partNum;
+            state.practiceSetIndex = 0;
+            state.checked = false;
+            state.userAnswers = {};
+
+            // Update UI Part Cards
+            document.querySelectorAll('.part-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-slate-800/90', 'border-cyan-500/50', 'text-white', 'shadow-lg');
+                btn.classList.add('bg-slate-900', 'border-slate-800', 'text-slate-400');
+            });
+            const activeBtn = document.getElementById(`part-tab-${partNum}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-slate-800/90', 'border-cyan-500/50', 'text-white', 'shadow-lg');
+                activeBtn.classList.remove('bg-slate-900', 'border-slate-800', 'text-slate-400');
+            }
+
+            updateSetSelectorUI();
+            renderPracticeView();
+        }
+
+        function loadPracticeSet(setIdx) {
+            state.practiceSetIndex = setIdx;
+            state.checked = false;
+            state.userAnswers = {};
+            updateSetSelectorUI();
+            renderPracticeView();
+        }
+
+        function updateSetSelectorUI() {
+            document.querySelectorAll('.set-select-btn').forEach((btn, idx) => {
+                if (idx === state.practiceSetIndex) {
+                    btn.className = 'set-select-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600 text-white';
+                } else {
+                    btn.className = 'set-select-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700';
+                }
+            });
+        }
+
+        function togglePracticeHints() {
+            state.showHints = !state.showHints;
+            const hintBtnText = document.querySelector('#btn-toggle-hints span');
+            if(hintBtnText) hintBtnText.textContent = state.showHints ? 'Hide Hints' : 'Show Hints';
+            renderPracticeView();
+        }
+
+        function resetPracticeSet() {
+            state.checked = false;
+            state.userAnswers = {};
+            renderPracticeView();
+        }
+
+        /* Render Current Practice Task */
+        function renderPracticeView() {
+            const container = document.getElementById('practice-content-area');
+            const heading = document.getElementById('exercise-heading');
+            const title = document.getElementById('exercise-part-title');
+            const instructions = document.getElementById('exercise-instructions');
+            const statusBadge = document.getElementById('exercise-status');
+            const explanationPanel = document.getElementById('explanation-panel');
+
+            // Reset Status Badge
+            if (state.checked) {
+                statusBadge.textContent = 'Completed & Graded';
+                statusBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800';
+            } else {
+                statusBadge.textContent = 'In Progress';
+                statusBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700';
+            }
+
+            const part = state.practicePart;
+            const setIdx = state.practiceSetIndex;
+
+            if (part === 1) {
+                const data = EXAM_DATABASE.part1[setIdx];
+                title.textContent = `Part 1: Multiple Choice Cloze (Set ${setIdx + 1})`;
+                heading.textContent = data.title;
+                instructions.innerHTML = `<i class="fa-solid fa-circle-info text-cyan-400 text-sm mt-0.5"></i><span>Read the text below and choose the correct answer (A, B, C or D) for each gap.</span>`;
+
+                let passageHTML = data.text;
+                // Replace gaps with inline dropdown selectors
+                data.options.forEach((opt, idx) => {
+                    const gapNum = opt.gap;
+                    const selectedVal = state.userAnswers[gapNum] !== undefined ? state.userAnswers[gapNum] : '';
+                    
+                    let selectClass = "bg-slate-950 border border-slate-700 text-cyan-400 font-bold px-2 py-1 rounded-lg text-sm focus:outline-none focus:border-cyan-400 my-1 mx-1 inline-block";
+                    if (state.checked) {
+                        if (selectedVal === opt.answer) {
+                            selectClass = "bg-emerald-950 border-2 border-emerald-500 text-emerald-300 font-bold px-2 py-1 rounded-lg text-sm my-1 mx-1 inline-block";
+                        } else {
+                            selectClass = "bg-rose-950 border-2 border-rose-500 text-rose-300 font-bold px-2 py-1 rounded-lg text-sm my-1 mx-1 inline-block";
+                        }
+                    }
+
+                    let optionsMarkup = `<option value="" disabled ${selectedVal === '' ? 'selected' : ''}>(${gapNum}) ---</option>`;
+                    opt.choices.forEach((choice, choiceIdx) => {
+                        const letter = String.fromCharCode(65 + choiceIdx);
+                        optionsMarkup += `<option value="${choiceIdx}" ${selectedVal === choiceIdx ? 'selected' : ''}>${letter}. ${choice}</option>`;
+                    });
+
+                    const inlineSelect = `<select onchange="handlePart1Select(${gapNum}, this.value)" class="${selectClass}">${optionsMarkup}</select>`;
+                    passageHTML = passageHTML.replace(`(${gapNum}) ___`, inlineSelect);
+                });
+
+                container.innerHTML = `<div class="leading-loose text-slate-200 font-normal">${passageHTML}</div>`;
+
+                // Render Explanations
+                if (state.checked) {
+                    let explHTML = '';
+                    data.options.forEach((opt, idx) => {
+                        const userAns = state.userAnswers[opt.gap];
+                        const isCorrect = userAns === opt.answer;
+                        const correctWord = opt.choices[opt.answer];
+                        explHTML += `
+                            <div class="p-3.5 rounded-xl border ${isCorrect ? 'bg-emerald-950/40 border-emerald-800/60' : 'bg-rose-950/40 border-rose-800/60'} space-y-1 text-xs">
+                                <div class="flex items-center justify-between font-bold">
+                                    <span class="${isCorrect ? 'text-emerald-400' : 'text-rose-400'}">Gap (${opt.gap}): ${correctWord}</span>
+                                    <span class="px-2 py-0.5 rounded ${isCorrect ? 'bg-emerald-900 text-emerald-200' : 'bg-rose-900 text-rose-200'}">${isCorrect ? 'Correct' : 'Incorrect'}</span>
+                                </div>
+                                <p class="text-slate-300 leading-relaxed pt-1">${opt.explanation}</p>
+                            </div>
+                        `;
+                    });
+                    explanationPanel.innerHTML = explHTML;
+                } else if (state.showHints) {
+                    let hintHTML = '<div class="space-y-2 text-xs text-amber-300 bg-amber-950/30 p-4 rounded-xl border border-amber-800/40"><h4 class="font-bold flex items-center gap-2"><i class="fa-solid fa-lightbulb"></i> Grammar & Lexical Hints</h4><ul class="list-disc pl-4 space-y-1">';
+                    data.options.forEach(opt => {
+                        hintHTML += `<li><strong>Gap ${opt.gap}:</strong> Tests dependent prepositions or collocations.</li>`;
+                    });
+                    hintHTML += '</ul></div>';
+                    explanationPanel.innerHTML = hintHTML;
+                } else {
+                    explanationPanel.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm"><i class="fa-regular fa-comment-dots text-3xl mb-2 block"></i>Complete the gaps and click <strong>Check Answers</strong> to view full B2 explanations.</div>`;
+                }
+            }
+            else if (part === 2) {
+                const data = EXAM_DATABASE.part2[setIdx];
+                title.textContent = `Part 2: Open Cloze (Set ${setIdx + 1})`;
+                heading.textContent = data.title;
+                instructions.innerHTML = `<i class="fa-solid fa-circle-info text-cyan-400 text-sm mt-0.5"></i><span>Read the text below and think of the word which best fits each gap. Use <strong>ONLY ONE WORD</strong> in each gap.</span>`;
+
+                let passageHTML = data.text;
+                for (let i = 1; i <= 8; i++) {
+                    const userVal = state.userAnswers[i] || '';
+                    let inputClass = "cloze-input bg-slate-950 border border-slate-700 text-cyan-300 font-bold px-3 py-1 rounded-lg text-sm w-28 text-center mx-1 my-1 focus:outline-none";
+                    
+                    if (state.checked) {
+                        const correctList = data.answers[i - 1];
+                        const isCorrect = correctList.includes(userVal.trim().toLowerCase());
+                        if (isCorrect) {
+                            inputClass = "cloze-input bg-emerald-950 border-2 border-emerald-500 text-emerald-300 font-bold px-3 py-1 rounded-lg text-sm w-28 text-center mx-1 my-1";
+                        } else {
+                            inputClass = "cloze-input bg-rose-950 border-2 border-rose-500 text-rose-300 font-bold px-3 py-1 rounded-lg text-sm w-28 text-center mx-1 my-1";
+                        }
+                    }
+
+                    const inputElem = `<input type="text" oninput="handleTextInput(2, ${i}, this.value)" value="${userVal}" placeholder="(${i})" class="${inputClass}" autocomplete="off"/>`;
+                    passageHTML = passageHTML.replace(`(${i}) ___`, inputElem);
+                }
+
+                container.innerHTML = `<div class="leading-loose text-slate-200 font-normal">${passageHTML}</div>`;
+
+                // Explanations
+                if (state.checked) {
+                    let explHTML = '';
+                    data.explanations.forEach((expl, idx) => {
+                        const gapNum = idx + 1;
+                        const userVal = (state.userAnswers[gapNum] || '').trim().toLowerCase();
+                        const isCorrect = data.answers[idx].includes(userVal);
+                        explHTML += `
+                            <div class="p-3.5 rounded-xl border ${isCorrect ? 'bg-emerald-950/40 border-emerald-800/60' : 'bg-rose-950/40 border-rose-800/60'} space-y-1 text-xs">
+                                <div class="flex items-center justify-between font-bold">
+                                    <span class="${isCorrect ? 'text-emerald-400' : 'text-rose-400'}">Gap (${gapNum}): ${data.answers[idx].join(' / ')}</span>
+                                    <span class="px-2 py-0.5 rounded ${isCorrect ? 'bg-emerald-900 text-emerald-200' : 'bg-rose-900 text-rose-200'}">${isCorrect ? 'Correct' : 'Incorrect'}</span>
+                                </div>
+                                <p class="text-slate-300 leading-relaxed pt-1">${expl}</p>
+                            </div>
+                        `;
+                    });
+                    explanationPanel.innerHTML = explHTML;
+                } else {
+                    explanationPanel.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm"><i class="fa-regular fa-comment-dots text-3xl mb-2 block"></i>Type your single-word answers into each gap and click <strong>Check Answers</strong>.</div>`;
+                }
+            }
+            else if (part === 3) {
+                const data = EXAM_DATABASE.part3[setIdx];
+                title.textContent = `Part 3: Word Formation (Set ${setIdx + 1})`;
+                heading.textContent = data.title;
+                instructions.innerHTML = `<i class="fa-solid fa-circle-info text-cyan-400 text-sm mt-0.5"></i><span>Read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</span>`;
+
+                let passageHTML = data.text;
+                for (let i = 1; i <= 8; i++) {
+                    const stem = data.stems[i - 1];
+                    const userVal = state.userAnswers[i] || '';
+                    let inputClass = "cloze-input bg-slate-950 border border-slate-700 text-cyan-300 font-bold px-3 py-1 rounded-lg text-sm w-36 text-center uppercase mx-1 my-1 focus:outline-none";
+
+                    if (state.checked) {
+                        const isCorrect = userVal.trim().toUpperCase() === data.answers[i - 1];
+                        if (isCorrect) {
+                            inputClass = "cloze-input bg-emerald-950 border-2 border-emerald-500 text-emerald-300 font-bold px-3 py-1 rounded-lg text-sm w-36 text-center uppercase mx-1 my-1";
+                        } else {
+                            inputClass = "cloze-input bg-rose-950 border-2 border-rose-500 text-rose-300 font-bold px-3 py-1 rounded-lg text-sm w-36 text-center uppercase mx-1 my-1";
+                        }
+                    }
+
+                    const inputElem = `<span class="inline-flex items-center gap-1.5 border border-slate-800 bg-slate-950/80 px-2 py-0.5 rounded-xl my-1"><input type="text" oninput="handleTextInput(3, ${i}, this.value)" value="${userVal}" placeholder="(${i})" class="${inputClass}" autocomplete="off"/><span class="bg-cyan-950 text-cyan-300 font-mono font-bold text-xs px-2 py-1 rounded-md border border-cyan-800">${stem}</span></span>`;
+                    passageHTML = passageHTML.replace(`(${i}) ___`, inputElem);
+                }
+
+                container.innerHTML = `<div class="leading-loose text-slate-200 font-normal">${passageHTML}</div>`;
+
+                if (state.checked) {
+                    let explHTML = '';
+                    data.explanations.forEach((expl, idx) => {
+                        const gapNum = idx + 1;
+                        const userVal = (state.userAnswers[gapNum] || '').trim().toUpperCase();
+                        const isCorrect = userVal === data.answers[idx];
+                        explHTML += `
+                            <div class="p-3.5 rounded-xl border ${isCorrect ? 'bg-emerald-950/40 border-emerald-800/60' : 'bg-rose-950/40 border-rose-800/60'} space-y-1 text-xs">
+                                <div class="flex items-center justify-between font-bold">
+                                    <span class="${isCorrect ? 'text-emerald-400' : 'text-rose-400'}">(${gapNum}) ${data.stems[idx]} &rarr; ${data.answers[idx]}</span>
+                                    <span class="px-2 py-0.5 rounded ${isCorrect ? 'bg-emerald-900 text-emerald-200' : 'bg-rose-900 text-rose-200'}">${isCorrect ? 'Correct' : 'Incorrect'}</span>
+                                </div>
+                                <p class="text-slate-300 leading-relaxed pt-1">${expl}</p>
+                            </div>
+                        `;
+                    });
+                    explanationPanel.innerHTML = explHTML;
+                } else {
+                    explanationPanel.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm"><i class="fa-regular fa-comment-dots text-3xl mb-2 block"></i>Form appropriate adjectives, nouns, adverbs or verbs using the stem words in capitals.</div>`;
+                }
+            }
+            else if (part === 4) {
+                const data = EXAM_DATABASE.part4[setIdx];
+                title.textContent = `Part 4: Key Word Transformation (Set ${setIdx + 1})`;
+                heading.textContent = data.title;
+                instructions.innerHTML = `<i class="fa-solid fa-circle-info text-cyan-400 text-sm mt-0.5"></i><span>For questions 1–6, complete the second sentence so that it has a similar meaning to the first sentence, using the key word given. <strong>DO NOT CHANGE THE WORD GIVEN</strong>. You must use between <strong>TWO and FIVE words</strong>, including the word given.</span>`;
+
+                let tasksHTML = '<div class="space-y-6">';
+                data.items.forEach((item, idx) => {
+                    const qNum = idx + 1;
+                    const userVal = state.userAnswers[qNum] || '';
+                    let inputClass = "cloze-input bg-slate-950 border border-slate-700 text-cyan-300 font-bold px-3 py-2 rounded-xl text-sm w-full focus:outline-none";
+
+                    if (state.checked) {
+                        const cleanUser = userVal.trim().toLowerCase();
+                        const isFull = cleanUser === item.answer.toLowerCase() || item.alternatives.includes(cleanUser);
+                        if (isFull) {
+                            inputClass = "cloze-input bg-emerald-950 border-2 border-emerald-500 text-emerald-300 font-bold px-3 py-2 rounded-xl text-sm w-full";
+                        } else {
+                            inputClass = "cloze-input bg-rose-950 border-2 border-rose-500 text-rose-300 font-bold px-3 py-2 rounded-xl text-sm w-full";
+                        }
+                    }
+
+                    tasksHTML += `
+                        <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-3">
+                            <div class="text-xs text-slate-400 font-bold">Question ${qNum}</div>
+                            <div class="text-sm text-slate-200 font-medium">${item.original}</div>
+                            
+                            <div class="flex items-center gap-3">
+                                <span class="bg-indigo-950 border border-indigo-700 text-indigo-300 font-mono font-bold px-3 py-1.5 rounded-lg text-xs uppercase tracking-wider">${item.keyword}</span>
+                                <span class="text-xs text-slate-400">(Key word - do not change)</span>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-2 text-sm text-slate-200 pt-1">
+                                <span>${item.lead}</span>
+                                <div class="flex-1 min-w-[240px]">
+                                    <input type="text" oninput="handleTextInput(4, ${qNum}, this.value)" value="${userVal}" placeholder="Type target phrase (2-5 words)..." class="${inputClass}" autocomplete="off"/>
+                                </div>
+                                <span>${item.trail}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                tasksHTML += '</div>';
+
+                container.innerHTML = tasksHTML;
+
+                if (state.checked) {
+                    let explHTML = '';
+                    data.items.forEach((item, idx) => {
+                        const qNum = idx + 1;
+                        const userVal = (state.userAnswers[qNum] || '').trim().toLowerCase();
+                        const isFull = userVal === item.answer.toLowerCase() || item.alternatives.includes(userVal);
+                        
+                        // Check partial credit (1 point out of 2)
+                        let pts = 0;
+                        if (isFull) {
+                            pts = 2;
+                        } else if (userVal.includes(item.part1.toLowerCase()) || userVal.includes(item.part2.toLowerCase())) {
+                            pts = 1;
+                        }
+
+                        explHTML += `
+                            <div class="p-3.5 rounded-xl border ${pts === 2 ? 'bg-emerald-950/40 border-emerald-800/60' : pts === 1 ? 'bg-amber-950/40 border-amber-800/60' : 'bg-rose-950/40 border-rose-800/60'} space-y-1 text-xs">
+                                <div class="flex items-center justify-between font-bold">
+                                    <span class="${pts === 2 ? 'text-emerald-400' : pts === 1 ? 'text-amber-400' : 'text-rose-400'}">Q${qNum}: ${item.answer}</span>
+                                    <span class="px-2 py-0.5 rounded ${pts === 2 ? 'bg-emerald-900 text-emerald-200' : pts === 1 ? 'bg-amber-900 text-amber-200' : 'bg-rose-900 text-rose-200'}">${pts} / 2 pts</span>
+                                </div>
+                                <div class="text-slate-400 text-[11px]">Marks breakdown: [${item.part1}] (1pt) | [${item.part2}] (1pt)</div>
+                                <p class="text-slate-300 leading-relaxed pt-1">${item.explanation}</p>
+                            </div>
+                        `;
+                    });
+                    explanationPanel.innerHTML = explHTML;
+                } else {
+                    explanationPanel.innerHTML = `<div class="text-center py-12 text-slate-500 text-sm"><i class="fa-regular fa-comment-dots text-3xl mb-2 block"></i>Complete the sentence transformations and click <strong>Check Answers</strong>. Each question is worth up to 2 marks.</div>`;
+                }
+            }
+        }
+
+        /* Handlers for User Inputs */
+        function handlePart1Select(gapNum, val) {
+            state.userAnswers[gapNum] = parseInt(val, 10);
+        }
+
+        function handleTextInput(part, gapNum, val) {
+            state.userAnswers[gapNum] = val;
+        }
+
+        /* Check Answers Logic */
+        function checkPracticeAnswers() {
+            state.checked = true;
+            const part = state.practicePart;
+            const setIdx = state.practiceSetIndex;
+            let totalQs = 0;
+            let correctQs = 0;
+
+            if (part === 1) {
+                const data = EXAM_DATABASE.part1[setIdx];
+                totalQs = 8;
+                data.options.forEach(opt => {
+                    if (state.userAnswers[opt.gap] === opt.answer) correctQs++;
+                });
+            } else if (part === 2) {
+                const data = EXAM_DATABASE.part2[setIdx];
+                totalQs = 8;
+                data.answers.forEach((ansList, idx) => {
+                    const userVal = (state.userAnswers[idx + 1] || '').trim().toLowerCase();
+                    if (ansList.includes(userVal)) correctQs++;
+                });
+            } else if (part === 3) {
+                const data = EXAM_DATABASE.part3[setIdx];
+                totalQs = 8;
+                data.answers.forEach((ans, idx) => {
+                    const userVal = (state.userAnswers[idx + 1] || '').trim().toUpperCase();
+                    if (userVal === ans) correctQs++;
+                });
+            } else if (part === 4) {
+                const data = EXAM_DATABASE.part4[setIdx];
+                totalQs = 6;
+                data.items.forEach((item, idx) => {
+                    const userVal = (state.userAnswers[idx + 1] || '').trim().toLowerCase();
+                    const isFull = userVal === item.answer.toLowerCase() || item.alternatives.includes(userVal);
+                    if (isFull) correctQs++;
+                });
+            }
+
+            // Update stats
+            state.stats.attempted += totalQs;
+            state.stats.correct += correctQs;
+            state.stats.partStats[part].total += totalQs;
+            state.stats.partStats[part].correct += correctQs;
+
+            // Log history
+            state.stats.history.unshift({
+                date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                mode: `Practice Part ${part}`,
+                set: `Set ${setIdx + 1}`,
+                score: `${correctQs} / ${totalQs}`,
+                accuracy: `${Math.round((correctQs / totalQs) * 100)}%`
+            });
+
+            saveStateToStorage();
+            updateAnalyticsUI();
+            renderPracticeView();
+        }
+
+
+        /* ==================== MOCK EXAM ENGINE ==================== */
+        function startMockExam() {
+            state.mockActive = true;
+            state.mockTimeRemaining = 2700; // 45 mins
+            state.mockAnswers = {};
+
+            document.getElementById('mock-start-btn').classList.add('hidden');
+            document.getElementById('mock-submit-btn').classList.remove('hidden');
+
+            const container = document.getElementById('mock-exam-container');
+            container.classList.remove('opacity-50', 'pointer-events-none');
+
+            // Build Full Exam Paper Layout (Using Set 1 of each part for mock)
+            let mockHTML = '';
+
+            // PART 1
+            const p1 = EXAM_DATABASE.part1[0];
+            mockHTML += `
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3">
+                        <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Part 1: Multiple Choice Cloze</span>
+                        <h3 class="text-lg font-bold text-white">${p1.title}</h3>
+                    </div>
+                    <div class="text-slate-300 leading-loose">${buildMockPart1Passage(p1)}</div>
+                </div>
+            `;
+
+            // PART 2
+            const p2 = EXAM_DATABASE.part2[0];
+            mockHTML += `
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3">
+                        <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Part 2: Open Cloze</span>
+                        <h3 class="text-lg font-bold text-white">${p2.title}</h3>
+                    </div>
+                    <div class="text-slate-300 leading-loose">${buildMockPart2Passage(p2)}</div>
+                </div>
+            `;
+
+            // PART 3
+            const p3 = EXAM_DATABASE.part3[0];
+            mockHTML += `
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3">
+                        <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Part 3: Word Formation</span>
+                        <h3 class="text-lg font-bold text-white">${p3.title}</h3>
+                    </div>
+                    <div class="text-slate-300 leading-loose">${buildMockPart3Passage(p3)}</div>
+                </div>
+            `;
+
+            // PART 4
+            const p4 = EXAM_DATABASE.part4[0];
+            mockHTML += `
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3">
+                        <span class="text-xs font-bold text-cyan-400 uppercase tracking-widest">Part 4: Key Word Transformation</span>
+                        <h3 class="text-lg font-bold text-white">Sentence Rewrites (6 Questions)</h3>
+                    </div>
+                    <div>${buildMockPart4Tasks(p4)}</div>
+                </div>
+            `;
+
+            container.innerHTML = mockHTML;
+
+            // Start Timer Countdown
+            clearInterval(state.mockTimerInterval);
+            state.mockTimerInterval = setInterval(() => {
+                state.mockTimeRemaining--;
+                const mins = Math.floor(state.mockTimeRemaining / 60);
+                const secs = state.mockTimeRemaining % 60;
+                document.getElementById('mock-timer').textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                
+                if (state.mockTimeRemaining <= 0) {
+                    clearInterval(state.mockTimerInterval);
+                    submitMockExam();
+                }
+            }, 1000);
+        }
+
+        function buildMockPart1Passage(data) {
+            let passageHTML = data.text;
+            data.options.forEach((opt) => {
+                let optionsMarkup = `<option value="" selected disabled>(${opt.gap}) ---</option>`;
+                opt.choices.forEach((choice, choiceIdx) => {
+                    const letter = String.fromCharCode(65 + choiceIdx);
+                    optionsMarkup += `<option value="${choiceIdx}">${letter}. ${choice}</option>`;
+                });
+                const selectElem = `<select onchange="handleMockInput('p1_${opt.gap}', this.value)" class="bg-slate-950 border border-slate-700 text-cyan-400 font-bold px-2 py-1 rounded-lg text-sm mx-1 my-1">${optionsMarkup}</select>`;
+                passageHTML = passageHTML.replace(`(${opt.gap}) ___`, selectElem);
+            });
+            return passageHTML;
+        }
+
+        function buildMockPart2Passage(data) {
+            let passageHTML = data.text;
+            for (let i = 1; i <= 8; i++) {
+                const inputElem = `<input type="text" oninput="handleMockInput('p2_${i}', this.value)" placeholder="(${i})" class="bg-slate-950 border border-slate-700 text-cyan-300 font-bold px-3 py-1 rounded-lg text-sm w-28 text-center mx-1 my-1 focus:outline-none" autocomplete="off"/>`;
+                passageHTML = passageHTML.replace(`(${i}) ___`, inputElem);
+            }
+            return passageHTML;
+        }
+
+        function buildMockPart3Passage(data) {
+            let passageHTML = data.text;
+            for (let i = 1; i <= 8; i++) {
+                const stem = data.stems[i - 1];
+                const inputElem = `<span class="inline-flex items-center gap-1.5 border border-slate-800 bg-slate-950/80 px-2 py-0.5 rounded-xl my-1"><input type="text" oninput="handleMockInput('p3_${i}', this.value)" placeholder="(${i})" class="bg-slate-950 border border-slate-700 text-cyan-300 font-bold px-3 py-1 rounded-lg text-sm w-36 text-center uppercase mx-1 my-1 focus:outline-none" autocomplete="off"/><span class="bg-cyan-950 text-cyan-300 font-mono font-bold text-xs px-2 py-1 rounded-md border border-cyan-800">${stem}</span></span>`;
+                passageHTML = passageHTML.replace(`(${i}) ___`, inputElem);
+            }
+            return passageHTML;
+        }
+
+        function buildMockPart4Tasks(data) {
+            let html = '<div class="space-y-4">';
+            data.items.forEach((item, idx) => {
+                const qNum = idx + 1;
+                html += `
+                    <div class="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-2">
+                        <div class="text-xs text-slate-400 font-bold">Q${qNum}: ${item.original}</div>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-indigo-950 border border-indigo-700 text-indigo-300 font-mono font-bold px-2.5 py-1 rounded text-xs uppercase">${item.keyword}</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2 text-sm text-slate-200">
+                            <span>${item.lead}</span>
+                            <input type="text" oninput="handleMockInput('p4_${qNum}', this.value)" placeholder="target phrase..." class="flex-1 bg-slate-950 border border-slate-700 text-cyan-300 font-bold px-3 py-1.5 rounded-xl text-sm min-w-[200px]" autocomplete="off"/>
+                            <span>${item.trail}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function handleMockInput(key, val) {
+            state.mockAnswers[key] = val;
+        }
+
+        function submitMockExam() {
+            clearInterval(state.mockTimerInterval);
+            
+            // Grade Mock Exam
+            let p1Score = 0;
+            const p1Data = EXAM_DATABASE.part1[0];
+            p1Data.options.forEach(opt => {
+                if (parseInt(state.mockAnswers[`p1_${opt.gap}`], 10) === opt.answer) p1Score++;
+            });
+
+            let p2Score = 0;
+            const p2Data = EXAM_DATABASE.part2[0];
+            p2Data.answers.forEach((ansList, idx) => {
+                const val = (state.mockAnswers[`p2_${idx + 1}`] || '').trim().toLowerCase();
+                if (ansList.includes(val)) p2Score++;
+            });
+
+            let p3Score = 0;
+            const p3Data = EXAM_DATABASE.part3[0];
+            p3Data.answers.forEach((ans, idx) => {
+                const val = (state.mockAnswers[`p3_${idx + 1}`] || '').trim().toUpperCase();
+                if (val === ans) p3Score++;
+            });
+
+            let p4Score = 0; // Max 12 points (2 pts per question)
+            const p4Data = EXAM_DATABASE.part4[0];
+            p4Data.items.forEach((item, idx) => {
+                const val = (state.mockAnswers[`p4_${idx + 1}`] || '').trim().toLowerCase();
+                const isFull = val === item.answer.toLowerCase() || item.alternatives.includes(val);
+                if (isFull) {
+                    p4Score += 2;
+                } else if (val.includes(item.part1.toLowerCase()) || val.includes(item.part2.toLowerCase())) {
+                    p4Score += 1;
+                }
+            });
+
+            const totalRaw = p1Score + p2Score + p3Score + p4Score; // Out of 36
+            
+            // Calculate Cambridge Scale Score (Formula for B2 First Use of English)
+            let scaleScore = 140;
+            if (totalRaw >= 36) scaleScore = 190;
+            else if (totalRaw >= 32) scaleScore = 180 + Math.round(((totalRaw - 32) / 4) * 10);
+            else if (totalRaw >= 28) scaleScore = 173 + Math.round(((totalRaw - 28) / 4) * 6);
+            else if (totalRaw >= 24) scaleScore = 160 + Math.round(((totalRaw - 24) / 4) * 12);
+            else if (totalRaw >= 18) scaleScore = 145 + Math.round(((totalRaw - 18) / 6) * 14);
+
+            let grade = 'Below B2';
+            let passStatus = 'FAIL';
+            if (scaleScore >= 180) { grade = 'Grade A (C1 Level)'; passStatus = 'PASS'; }
+            else if (scaleScore >= 173) { grade = 'Grade B'; passStatus = 'PASS'; }
+            else if (scaleScore >= 160) { grade = 'Grade C'; passStatus = 'PASS'; }
+
+            // Populate Modal Results
+            document.getElementById('modal-raw-score').textContent = `${totalRaw} / 36`;
+            document.getElementById('modal-scale-score').textContent = scaleScore;
+            document.getElementById('modal-grade').textContent = grade;
+            document.getElementById('modal-pass-status').textContent = passStatus;
+
+            document.getElementById('modal-p1-score').textContent = `${p1Score} / 8`;
+            document.getElementById('modal-p2-score').textContent = `${p2Score} / 8`;
+            document.getElementById('modal-p3-score').textContent = `${p3Score} / 8`;
+            document.getElementById('modal-p4-score').textContent = `${p4Score} / 12`;
+
+            // Update Global Stats
+            state.stats.mocksCompleted++;
+            state.stats.history.unshift({
+                date: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                mode: 'Full Mock Exam',
+                set: 'Mock Paper 1',
+                score: `${totalRaw} / 36`,
+                accuracy: `${scaleScore} Scale`
+            });
+
+            saveStateToStorage();
+            updateAnalyticsUI();
+
+            // Open Modal
+            document.getElementById('mock-results-modal').classList.remove('hidden');
+        }
+
+        function closeMockModal() {
+            document.getElementById('mock-results-modal').classList.add('hidden');
+        }
+
+
+        /* ==================== REVISION HUB ENGINE ==================== */
+        let currentRevTab = 'collocations';
+
+        function switchRevisionTab(tabKey) {
+            currentRevTab = tabKey;
+            document.querySelectorAll('.rev-tab').forEach(btn => {
+                btn.className = 'rev-tab border-b-2 border-transparent pb-3 text-sm font-semibold text-slate-400 hover:text-slate-200';
+            });
+            const activeTab = document.getElementById(`rev-tab-${tabKey}`);
+            if (activeTab) activeTab.className = 'rev-tab border-b-2 border-cyan-500 pb-3 text-sm font-bold text-cyan-400';
+            renderRevisionView();
+        }
+
+        function renderRevisionView() {
+            const container = document.getElementById('revision-panel-container');
+            const items = REVISION_DATA[currentRevTab] || [];
+            
+            let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+            items.forEach(item => {
+                if (currentRevTab === 'collocations') {
+                    html += `
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-cyan-400 text-sm">${item.term}</span>
+                                <span class="text-[10px] bg-slate-950 text-slate-400 px-2 py-0.5 rounded font-mono">${item.type}</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">${item.detail}</p>
+                        </div>
+                    `;
+                } else if (currentRevTab === 'grammar') {
+                    html += `
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-indigo-400 text-sm">${item.term}</span>
+                                <span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded font-mono">${item.type}</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">${item.detail}</p>
+                        </div>
+                    `;
+                } else if (currentRevTab === 'wordformation') {
+                    html += `
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 text-sm">${item.term}</span>
+                                <span class="text-[10px] bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded font-mono">${item.type}</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">${item.detail}</p>
+                        </div>
+                    `;
+                } else if (currentRevTab === 'transformations') {
+                    html += `
+                        <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2 col-span-1 md:col-span-2">
+                            <div class="font-bold text-amber-400 text-sm">${item.pattern}</div>
+                            <div class="text-xs bg-slate-950 p-2.5 rounded-lg border border-slate-800 font-mono text-cyan-300">
+                                <strong>Formula:</strong> ${item.formula}
+                            </div>
+                            <div class="text-xs text-slate-300">
+                                <strong>Exam Example:</strong> ${item.example}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function filterRevisionContent() {
+            const query = document.getElementById('revision-search').value.toLowerCase();
+            const cards = document.querySelectorAll('#revision-panel-container > div > div');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+
+        /* ==================== STATS & ANALYTICS UI ==================== */
+        function updateAnalyticsUI() {
+            const totalAtt = state.stats.attempted;
+            const totalCorr = state.stats.correct;
+            const overallAcc = totalAtt > 0 ? Math.round((totalCorr / totalAtt) * 100) : 0;
+
+            document.getElementById('stat-accuracy').textContent = `${overallAcc}%`;
+            document.getElementById('stat-attempted').textContent = totalAtt;
+            document.getElementById('stat-mocks').textContent = state.stats.mocksCompleted;
+
+            // Update Progress Bars per Part
+            for (let i = 1; i <= 4; i++) {
+                const pTotal = state.stats.partStats[i].total;
+                const pCorr = state.stats.partStats[i].correct;
+                const acc = pTotal > 0 ? Math.round((pCorr / pTotal) * 100) : 0;
+                
+                document.getElementById(`bar-val-${i}`).textContent = `${acc}% (${pCorr}/${pTotal})`;
+                document.getElementById(`bar-fill-${i}`).style.width = `${acc}%`;
+            }
+
+            // Find Weakest Area
+            let minAcc = 101;
+            let weakPartName = 'None yet';
+            for (let i = 1; i <= 4; i++) {
+                const pTotal = state.stats.partStats[i].total;
+                if (pTotal > 0) {
+                    const acc = (state.stats.partStats[i].correct / pTotal) * 100;
+                    if (acc < minAcc) {
+                        minAcc = acc;
+                        weakPartName = `Part ${i}`;
+                    }
+                }
+            }
+            if (minAcc !== 101) {
+                document.getElementById('stat-weakest').textContent = `${weakPartName} (${Math.round(minAcc)}%)`;
+            }
+
+            // Render History Table
+            const historyBody = document.getElementById('history-table-body');
+            if (state.stats.history.length === 0) {
+                historyBody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">No session history yet. Complete exercises to populate analytics!</td></tr>`;
+            } else {
+                let rows = '';
+                state.stats.history.slice(0, 8).forEach(item => {
+                    rows += `
+                        <tr class="hover:bg-slate-950/40">
+                            <td class="p-3 font-mono text-slate-400">${item.date}</td>
+                            <td class="p-3 font-bold text-white">${item.mode}</td>
+                            <td class="p-3 text-slate-300">${item.set}</td>
+                            <td class="p-3 text-cyan-400 font-bold">${item.score}</td>
+                            <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 font-mono text-[11px]">${item.accuracy}</span></td>
+                        </tr>
+                    `;
+                });
+                historyBody.innerHTML = rows;
+            }
+        }
+
+        /* State Persistence (Session State) */
+        function saveStateToStorage() {
+            try {
+                sessionStorage.setItem('fce_use_of_english_state', JSON.stringify(state.stats));
+            } catch (e) {}
+        }
+
+        function loadStateFromStorage() {
+            try {
+                const saved = sessionStorage.getItem('fce_use_of_english_state');
+                if (saved) {
+                    state.stats = JSON.parse(saved);
+                }
+            } catch (e) {}
+        }
+
+        function resetAllProgress() {
+            if (confirm("Reset all session progress, practice scores, and exam history?")) {
+                state.stats = {
+                    attempted: 0,
+                    correct: 0,
+                    partStats: {
+                        1: { total: 0, correct: 0 },
+                        2: { total: 0, correct: 0 },
+                        3: { total: 0, correct: 0 },
+                        4: { total: 0, correct: 0 }
+                    },
+                    mocksCompleted: 0,
+                    history: []
+                };
+                sessionStorage.removeItem('fce_use_of_english_state');
+                updateAnalyticsUI();
+                renderPracticeView();
+            }
+        }
+    </script>
+</body>
+</html>
